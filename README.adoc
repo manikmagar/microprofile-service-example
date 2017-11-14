@@ -1,0 +1,71 @@
+# Eclipse MicroProfile based Java Micro service example
+
+This is a simple example of writing java micro services based on https://microprofile.io[Eclipse MicroProfile].
+
+## Eclipse MicroProfile
+Eclipse MicroProfile version 1.1 with https://payara.fish[Payara Micro] runtime is used in this example.
+
+MicroProfile 1.1 consists of
+JAX-RS 2.0, CDI 1.2, JSON-P 1.0 and Eclipse Config 1.0 API.
+
+## Build and Run
+Project uses maven to manage build lifecycle.
+
+### Package MicroBundle
+To package the Payara microbundle, run below maven command:
+
+`mvn clean install payara-micro:bundle`
+
+### Run Service
+To run microservice in foreground -
+
+`mvn payara-micro:start`
+
+(Press CTRL+C to exist).
+
+To run microservice as daemon -
+
+`mvn payara-micro:start -DrunInBackground=true`
+
+To stop the daemon service -
+
+`mvn payara-micro:stop`
+
+
+## Access service
+Service exposes below JAX RS Endpoints -
+
+GET http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books
+POST http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books
+GET http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books/{isbn}
+
+
+### cURL samples -
+
+#### List Books:
+----
+curl -X GET http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books
+----
+
+#### Post new Book:
+[[console]]
+----
+curl -X POST \
+  http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books \
+  -H 'content-type: application/json' \
+  -d '{
+	"isbn": 2,
+	"title": "JavaEE Master book",
+	"description": "Get Started with Java EE",
+	"author": {
+		"id": 1,
+		"firstName": "Java",
+		"lastName": "EE"
+	}
+
+}'
+----
+#### Get single book info based on isbn
+----
+curl -X GET http://localhost:8080/microprofile-service-example-0.0.1-SNAPSHOT/api/books/1
+----

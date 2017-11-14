@@ -50,7 +50,7 @@ public class BookServiceEndpoint {
 	public Response addBook(Book book) {
 		System.out.println("Saving book - " + book);
 		if(getBook(book.getIsbn()) != null) {
-			return Response.status(Status.CONFLICT).build();
+			return Response.status(Status.CONFLICT).header("x-reason", "ISBN already exists").build();
 		}
 		if (bookService.addBook(book)) {
 			return Response.created(UriBuilder.fromMethod(BookServiceEndpoint.class, "getBook")

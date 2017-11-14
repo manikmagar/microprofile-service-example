@@ -1,4 +1,4 @@
-package com.javastreets.ee.microprofile.services;
+package com.javastreets.ee.microprofile.endpoints;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
